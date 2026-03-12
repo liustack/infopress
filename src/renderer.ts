@@ -38,9 +38,9 @@ function normalizeTimeout(value?: number): number {
 function findTemplatesDir(): string {
     const candidates = [
         // When running from project root (dev/installed)
-        path.resolve(process.cwd(), 'src/pdf/templates'),
+        path.resolve(process.cwd(), 'src/templates'),
         // Relative to dist/main.js
-        path.resolve(__dirname, '..', 'src', 'pdf', 'templates'),
+        path.resolve(__dirname, '..', 'src', 'templates'),
         // Relative to source file location
         path.resolve(__dirname, 'templates'),
     ];
@@ -200,7 +200,7 @@ export async function render(options: Options): Promise<Result> {
             // Initialize mermaid with theme-specific colors
             const templateName = template.name;
             await page.evaluate((tpl: string) => {
-                // Apple-style: elegant gray tones
+                // Default: clean gray tones
                 const defaultTheme = {
                     primaryColor: '#f5f5f7',
                     primaryTextColor: '#1d1d1f',

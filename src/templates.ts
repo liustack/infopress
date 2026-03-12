@@ -7,7 +7,7 @@ export interface PdfTemplate {
 export const pdfTemplates: Record<string, PdfTemplate> = {
     default: {
         name: 'default',
-        description: 'Apple-inspired clean design',
+        description: 'Clean minimalist design',
         file: 'default.html',
     },
     github: {

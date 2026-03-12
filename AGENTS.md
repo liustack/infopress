@@ -17,25 +17,22 @@ pnpm exec playwright install chromium
 > [!NOTE]
 > **Mermaid diagrams**: built-in support, no preprocessing needed. The ` ```mermaid ` code block in Markdown will automatically render into SVG graphics.
 
-## Code Organization (Domain-driven / Go Style)
-
-Use a domain-based structure:
+## Code Organization
 
 ```
 src/
-├── main.ts             # CLI entry
-└── pdf/                # PDF domain
-    ├── renderer.ts     # PDF rendering logic
-    ├── templates.ts    # template definitions
-    ├── fonts.ts        # font injection
-    └── templates/      # HTML template files
+├── main.ts         # CLI entry
+├── renderer.ts     # PDF rendering logic
+├── templates.ts    # template definitions
+├── fonts.ts        # font injection
+└── templates/      # HTML template files
 ```
 
 ## Skills Directory
 
 ```
 skills/
-└── web-to-pdf/
+└── pagepress/
     └── SKILL.md
 ```
 

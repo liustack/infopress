@@ -10,12 +10,15 @@
     "dev": "vite build --watch",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "prepublishOnly": "pnpm build",
     "docs:list": "node scripts/docs-list.js"
   },
   "files": [
     "dist",
-    "src/pdf/templates"
+    "src/templates"
   ],
   "keywords": [
     "pdf",
@@ -53,8 +56,10 @@
   },
   "devDependencies": {
     "@types/node": "^22.19.7",
+    "@vitest/coverage-v8": "^4.0.18",
     "typescript": "^5.9.3",
     "vite": "^6.4.1",
-    "vite-plugin-node": "^5.0.1"
+    "vite-plugin-node": "^5.0.1",
+    "vitest": "^4.0.18"
   }
 }

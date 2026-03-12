@@ -3,7 +3,7 @@
 declare const __APP_VERSION__: string;
 
 import { Command } from 'commander';
-import { render } from './pdf/renderer.ts';
+import { render } from './renderer.ts';
 
 const program = new Command();
 
