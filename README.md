@@ -37,7 +37,7 @@ pagepress -i page.html -o output.pdf
 
 ## Templates
 
-- `default` - Apple style
+- `default` - Clean minimalist style
 - `github` - GitHub style
 - `magazine` - magazine layout
 
@@ -52,7 +52,7 @@ pagepress -i page.html -o output.pdf
 
 ## AI Agent Skill
 
-- [web-to-pdf/SKILL.md](skills/web-to-pdf/SKILL.md)
+- [pagepress/SKILL.md](skills/pagepress/SKILL.md)
 
 ## License
 

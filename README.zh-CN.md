@@ -35,7 +35,7 @@ pagepress -i page.html -o output.pdf
 
 ## 模板
 
-- `default` - Apple 风格
+- `default` - 简洁风格
 - `github` - GitHub 风格
 - `magazine` - 杂志排版
 
@@ -50,7 +50,7 @@ pagepress -i page.html -o output.pdf
 
 ## AI Agent Skill
 
-- [web-to-pdf/SKILL.md](skills/web-to-pdf/SKILL.md)
+- [pagepress/SKILL.md](skills/pagepress/SKILL.md)
 
 ## License
 
