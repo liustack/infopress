@@ -35,6 +35,8 @@ bun.lock
 .venv
 .wrangler
 test-output
+test/output
+coverage/
 .agent/
 .issues/
 
