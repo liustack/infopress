@@ -1,6 +1,6 @@
 {
   "name": "@liustack/pagepress",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "CLI tool to render local Markdown and HTML files into PDF",
   "type": "module",
   "bin": {
