@@ -1,7 +1,7 @@
 import { chromium, Browser } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { createRequire } from 'module';
 import { marked, Renderer } from 'marked';
 import { markedHighlight } from 'marked-highlight';
@@ -184,6 +184,8 @@ export async function render(options: Options): Promise<Result> {
         }
         const page = await context.newPage();
 
+        // Anchor page URL to the input file location so relative local assets resolve correctly.
+        await page.goto(pathToFileURL(inputPath).href, { waitUntil: 'domcontentloaded', timeout });
         await page.setContent(htmlContent, { waitUntil, timeout });
 
         // Inject local fonts for magazine template
