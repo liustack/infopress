@@ -1,14 +1,15 @@
 import { chromium, Browser } from 'playwright';
 import * as fs from 'fs';
 import * as path from 'path';
-import { fileURLToPath, pathToFileURL } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { pathToFileURL } from 'url';
 
 type WaitUntilState = 'load' | 'domcontentloaded' | 'networkidle';
 
 const WAIT_UNTIL_STATES = new Set<WaitUntilState>(['load', 'domcontentloaded', 'networkidle']);
+const MIN_SCALE = 1;
+const MAX_SCALE = 4;
+const DEFAULT_WIDTH = 1200;
+const DEFAULT_HEIGHT = 630;
 
 function normalizeWaitUntil(value?: string): WaitUntilState {
     if (!value) return 'networkidle';
@@ -26,25 +27,47 @@ function normalizeTimeout(value?: number): number {
     return value;
 }
 
+function validateRange(name: string, value: number, min: number, max: number): void {
+    if (!Number.isFinite(value)) {
+        throw new Error(`${name} must be a finite number.`);
+    }
+    if (value < min || value > max) {
+        throw new Error(`${name} must be between ${min} and ${max}. Received: ${value}.`);
+    }
+}
+
 export interface Options {
     input: string;
     output: string;
+    width?: number;
+    height?: number;
+    scale?: number;
     safe?: boolean;
     waitUntil?: string;
     timeout?: number;
 }
 
 export interface Result {
-    pdfPath: string;
+    pngPath: string;
     meta: {
+        width: number;
+        height: number;
+        deviceScaleFactor: number;
         generatedAt: string;
     };
 }
 
 export async function render(options: Options): Promise<Result> {
+    const width = options.width ?? DEFAULT_WIDTH;
+    const height = options.height ?? DEFAULT_HEIGHT;
+    const scale = options.scale ?? 2;
     const safeMode = options.safe ?? false;
     const waitUntil = normalizeWaitUntil(options.waitUntil);
     const timeout = normalizeTimeout(options.timeout);
+
+    validateRange('Width', width, 1, 10000);
+    validateRange('Height', height, 1, 10000);
+    validateRange('Scale', scale, MIN_SCALE, MAX_SCALE);
 
     if (options.input.startsWith('http://') || options.input.startsWith('https://')) {
         throw new Error('Remote URL inputs are not supported. Please provide a local HTML file path.');
@@ -61,7 +84,11 @@ export async function render(options: Options): Promise<Result> {
 
     try {
         browser = await chromium.launch({ headless: true });
-        const context = await browser.newContext({ javaScriptEnabled: !safeMode });
+        const context = await browser.newContext({
+            viewport: { width, height },
+            deviceScaleFactor: scale,
+            javaScriptEnabled: !safeMode,
+        });
         if (safeMode) {
             await context.route('**/*', (route) => {
                 const url = route.request().url();
@@ -73,23 +100,47 @@ export async function render(options: Options): Promise<Result> {
         }
         const page = await context.newPage();
 
-        // Anchor page URL to the input file location so relative local assets resolve correctly.
+        // Navigate to the input file URL first so relative asset paths (images, fonts, etc.) resolve correctly.
         await page.goto(pathToFileURL(inputPath).href, { waitUntil: 'domcontentloaded', timeout });
         await page.setContent(htmlContent, { waitUntil, timeout });
 
-        await page.waitForTimeout(200);
+        // Force body to match specified dimensions
+        await page.addStyleTag({
+            content: `
+                html, body {
+                    width: ${width}px;
+                    height: ${height}px;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                }
+            `
+        });
+
+        await page.waitForTimeout(500);
+
+        const cardContainer = await page.$('#container');
+        if (!cardContainer) {
+            throw new Error('Missing #container element. PNG output requires a <div id="container"> wrapper.');
+        }
+        const box = await cardContainer.boundingBox();
+        if (!box || box.width <= 0 || box.height <= 0) {
+            throw new Error('Invalid #container size. Ensure it has a positive width and height.');
+        }
 
         const outputPath = path.resolve(options.output);
-        await page.pdf({
+        await page.screenshot({
             path: outputPath,
-            format: 'A4',
-            margin: { top: '0', right: '0', bottom: '0', left: '0' },
-            printBackground: true,
+            type: 'png',
+            clip: { x: box.x, y: box.y, width: box.width, height: box.height },
         });
 
         return {
-            pdfPath: outputPath,
+            pngPath: outputPath,
             meta: {
+                width,
+                height,
+                deviceScaleFactor: scale,
                 generatedAt: new Date().toISOString(),
             },
         };
