@@ -1,10 +1,10 @@
 {
-  "name": "@liustack/infopress",
+  "name": "@liustack/briefpress",
   "version": "2.0.1",
-  "description": "CLI tool to generate infographics, visual reports, and dashboards from HTML",
+  "description": "CLI tool to generate one-page visual briefs, infographics, reports, and dashboards from HTML",
   "type": "module",
   "bin": {
-    "infopress": "./dist/main.js"
+    "briefpress": "./dist/main.js"
   },
   "scripts": {
     "dev": "vite build --watch",
@@ -32,12 +32,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liustack/infopress.git"
+    "url": "git+https://github.com/liustack/briefpress.git"
   },
   "bugs": {
-    "url": "https://github.com/liustack/infopress/issues"
+    "url": "https://github.com/liustack/briefpress/issues"
   },
-  "homepage": "https://github.com/liustack/infopress#readme",
+  "homepage": "https://github.com/liustack/briefpress#readme",
   "engines": {
     "node": ">=18"
   },

@@ -1,4 +1,4 @@
-# InfoPress
+# BriefPress
 
 Generate one-page visual reports, dashboards, and infographics from HTML — powered by Playwright + Chromium.
 
@@ -15,32 +15,32 @@ Generate one-page visual reports, dashboards, and infographics from HTML — pow
 ## Installation
 
 ```bash
-npm install -g @liustack/infopress
+npm install -g @liustack/briefpress
 npx playwright install chromium
 ```
 
 Or run with `npx`:
 
 ```bash
-npx @liustack/infopress [options]
+npx @liustack/briefpress [options]
 ```
 
 ## Usage
 
 ```bash
 # Generate infographic (default 1200×630 @2x)
-infopress -i report.html -o report.png
+briefpress -i report.html -o report.png
 
 # Custom dimensions for a tall infographic
-infopress -i report.html -o report.png -w 1080 -h 1920
+briefpress -i report.html -o report.png -w 1080 -h 1920
 
 # High-DPI poster
-infopress -i poster.html -o poster.png -w 1200 -h 1500 --scale 3
+briefpress -i poster.html -o poster.png -w 1200 -h 1500 --scale 3
 ```
 
 ## HTML Requirements
 
-Your HTML must include a `<div id="container">` — InfoPress clips the screenshot to this element's bounding box.
+Your HTML must include a `<div id="container">` — BriefPress clips the screenshot to this element's bounding box.
 
 ```html
 <body>
@@ -63,7 +63,7 @@ Your HTML must include a `<div id="container">` — InfoPress clips the screensh
 
 ## AI Agent Skill
 
-- [infopress/SKILL.md](skills/infopress/SKILL.md)
+- [briefpress/SKILL.md](skills/briefpress/SKILL.md)
 
 ## License
 

@@ -38,4 +38,4 @@ git push origin "${TAG}"
 # 6. Publish
 pnpm publish --access public --no-git-checks
 
-echo "Published @liustack/infopress@${VERSION}"
+echo "Published @liustack/briefpress@${VERSION}"

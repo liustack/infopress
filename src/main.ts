@@ -8,7 +8,7 @@ import { render } from './renderer.ts';
 const program = new Command();
 
 program
-    .name('infopress')
+    .name('briefpress')
     .description('Generate one-page visual reports, dashboards, and infographics from HTML')
     .version(__APP_VERSION__)
     .requiredOption('-i, --input <path>', 'Input HTML file path')

@@ -1,4 +1,4 @@
-# InfoPress
+# BriefPress
 
 从 HTML 生成单页可视化报告、仪表盘和信息图 — 基于 Playwright + Chromium。
 
@@ -13,32 +13,32 @@
 ## 安装
 
 ```bash
-npm install -g @liustack/infopress
+npm install -g @liustack/briefpress
 npx playwright install chromium
 ```
 
 或使用 `npx`：
 
 ```bash
-npx @liustack/infopress [options]
+npx @liustack/briefpress [options]
 ```
 
 ## 用法
 
 ```bash
 # 生成信息图（默认 1200×630 @2x）
-infopress -i report.html -o report.png
+briefpress -i report.html -o report.png
 
 # 自定义尺寸的长信息图
-infopress -i report.html -o report.png -w 1080 -h 1920
+briefpress -i report.html -o report.png -w 1080 -h 1920
 
 # 高 DPI 海报
-infopress -i poster.html -o poster.png -w 1200 -h 1500 --scale 3
+briefpress -i poster.html -o poster.png -w 1200 -h 1500 --scale 3
 ```
 
 ## HTML 要求
 
-HTML 中必须包含 `<div id="container">` — InfoPress 会根据该元素的边界框裁剪截图。
+HTML 中必须包含 `<div id="container">` — BriefPress 会根据该元素的边界框裁剪截图。
 
 ```html
 <body>
@@ -61,7 +61,7 @@ HTML 中必须包含 `<div id="container">` — InfoPress 会根据该元素的�
 
 ## AI Agent Skill
 
-- [infopress/SKILL.md](skills/infopress/SKILL.md)
+- [briefpress/SKILL.md](skills/briefpress/SKILL.md)
 
 ## License
 

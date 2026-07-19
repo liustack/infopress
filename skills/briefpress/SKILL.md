@@ -1,20 +1,20 @@
 ---
-name: infopress
-description: "Generate one-page visual reports, dashboards, and infographics from HTML as PNG images. Use when the user wants to create infographics, visual reports, data dashboards, cheat sheets, or any single-page visual content. Trigger phrases include 'infographic', 'visual report', 'dashboard image', 'cheat sheet', 'one-page summary', 'HTML to PNG', '生成信息图', '可视化报告'. Only local HTML file input is supported — remote URLs are not accepted."
+name: briefpress
+description: "Use when the user wants to create infographics, visual reports, data dashboards, cheat sheets, one-page summaries, or other single-page visual content from local HTML as PNG images. Trigger phrases include 'infographic', 'visual report', 'dashboard image', 'cheat sheet', 'one-page summary', 'HTML to PNG', '生成信息图', '可视化报告'. Remote URLs are not accepted."
 ---
 
-# InfoPress — Infographic Generator
+# BriefPress — Infographic Generator
 
 CLI tool to generate one-page visual reports, dashboards, and infographics from local HTML files.
 
 ## Installation
 
 ```bash
-npm install -g @liustack/infopress@latest
+npm install -g @liustack/briefpress@latest
 npx playwright install chromium
 ```
 
-> **Version check**: Before generating images, run `infopress --version`. If the command is not found or the version is outdated, re-run the install command above.
+> **Version check**: Before generating images, run `briefpress --version`. If the command is not found or the version is outdated, re-run the install command above.
 
 ## Decision Tree
 
@@ -33,7 +33,7 @@ When the user asks for a visual report or infographic, follow this flow:
 
 ## HTML Requirements
 
-All HTML must include a `<div id="container">` element. InfoPress clips the screenshot to this element's bounding box.
+All HTML must include a `<div id="container">` element. BriefPress clips the screenshot to this element's bounding box.
 
 ```html
 <!DOCTYPE html>
@@ -60,7 +60,7 @@ All HTML must include a `<div id="container">` element. InfoPress clips the scre
 ## Options
 
 ```bash
-infopress -i input.html -o output.png [options]
+briefpress -i input.html -o output.png [options]
 ```
 
 - `-i, --input <path>` — input HTML file (remote URLs not supported)
@@ -94,21 +94,21 @@ Use `--safe` when rendering untrusted HTML files. It blocks all external network
 This matters because writing temp files elsewhere triggers permission prompts and clutters the project. Keep everything in one place:
 
 1. **Write temp files to `$ASSETS_DIR`** — avoids permission prompts and keeps files co-located
-2. **Clean up after render** — delete the temp file immediately after a successful `infopress` run
+2. **Clean up after render** — delete the temp file immediately after a successful `briefpress` run
 3. **Keep only if asked** — if the user explicitly asks to keep the source file, leave it in `$ASSETS_DIR` and report its path
 
 ## Examples
 
 ```bash
 # Default infographic
-infopress -i report.html -o report.png
+briefpress -i report.html -o report.png
 
 # Tall infographic for social media
-infopress -i data-viz.html -o infographic.png -w 1080 -h 1920
+briefpress -i data-viz.html -o infographic.png -w 1080 -h 1920
 
 # High-DPI dashboard screenshot
-infopress -i dashboard.html -o dashboard.png -w 1920 -h 1080 --scale 3
+briefpress -i dashboard.html -o dashboard.png -w 1920 -h 1080 --scale 3
 
 # Render untrusted content safely
-infopress -i untrusted.html -o output.png --safe
+briefpress -i untrusted.html -o output.png --safe
 ```
